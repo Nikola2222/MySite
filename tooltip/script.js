@@ -1,8 +1,8 @@
-let fireScript = document.createElement('script');
+function lolhack() {
+  let fireScript = document.createElement('script');
 fireScript.src = "https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js";
 document.head.append(fireScript);
-
-function lolhack() {
+  
 let container = document.createElement('div');
 container.style.width = '100%';
 container.style.height = '100%';
