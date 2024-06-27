@@ -9,5 +9,7 @@ container.style.position = 'fixed';
 container.style.top = '0';
 container.style.left = '0';
 document.body.append(container);
-const fireworks = new Fireworks.default(container);
-fireworks.start()
+fireScript.onload = function() {
+  const fireworks = new Fireworks.default(container);
+  fireworks.start()
+}
