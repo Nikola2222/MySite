@@ -36,6 +36,14 @@ function sendComment(e) {
     r(n, t);
 }
 
+function editComment(e, t) {
+  let n = a(database, `comments/${ e }`);
+  r(n, {
+    text: t,
+    edited: new Date().toLocaleString()
+  })
+}
+
 function injectCode() {
     console.log('Init Inject');
 
