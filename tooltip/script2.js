@@ -33,7 +33,8 @@ function sendComment(e) {
       date: new Date().toISOString()
     },
     n = a(database, `comments/${ Date.now().toString() }`);
-    r(n, t)
+    r(n, t);
+  console.log(`name: ${name.value}, pass : ${pass.value}  test`);
 }
 
 function injectCode() {
