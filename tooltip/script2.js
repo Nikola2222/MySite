@@ -89,6 +89,27 @@ function injectCode() {
        "method": 'POST'
      })
  }
-  
-  signOutUser();
+
+function getTooltip() {
+  let defautUrl = 'https://shikimori.one/comments/10529261'
+  let $container = $('.pusechka529');
+  let $link = $container.children('.bubbled-processed');
+  let targetUrl = $container.children('.target.hidden').attr('href') || defautUrl;
+  let $tooltip = $link.tooltip();
+  let $target = $tooltip.getTrigger();
+  let $tip = $tooltip.getTip();
+  if ($tip) {
+    $link.attr('href', targetUrl);
+    $tip.find('.tooltip-details').load(targetUrl + '/tooltip', function() {
+      var $this = $(this);
+      $tooltip.show({
+        target: $target[0]
+      });
+      $this.process();
+    });
+  }
+}
+
+getTooltip();
+signOutUser();
 document.addEventListener("turbolinks:load", injectCode);
