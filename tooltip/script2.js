@@ -95,7 +95,7 @@ function getTooltip() {
   let userData = $('body').data('user');
   let defautUrl = 'https://shikimori.one/comments/10529261';
   let $container = $('.pusechka529');
-  if ($container) {
+  if ($container.length) {
     let $link = $container.children('.bubbled-processed');
     let targetUrl = $container.children('.target.hidden').attr('href') || defautUrl;
     let $tooltip = $link.tooltip();
