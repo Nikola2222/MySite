@@ -91,29 +91,31 @@ async function signOutUser(delay) {
      })
  }
 
-async function getTooltip() {
+function getTooltip() {
   let defautUrl = 'https://shikimori.one/comments/10529261'
   let $container = $('.pusechka529');
-  let $link = $container.children('.bubbled-processed');
-  let targetUrl = $container.children('.target.hidden').attr('href') || defautUrl;
-  let $tooltip = $link.tooltip();
-  let $target = $tooltip.getTrigger();
-  let $tip = $tooltip.getTip();
-  if ($tip) {
-    $link.attr('href', targetUrl);
-    $tip.find('.tooltip-details').load(targetUrl + '/tooltip', function() {
-      var $this = $(this);
-      $tooltip.show({
-        target: $target[0]
+  if ($container) {
+    let $link = $container.children('.bubbled-processed');
+    let targetUrl = $container.children('.target.hidden').attr('href') || defautUrl;
+    let $tooltip = $link.tooltip();
+    //let $target = $tooltip.getTrigger();
+    let $tip = $tooltip.getTip();
+    if ($tip) {
+      $tip.find('.tooltip-details').load(targetUrl + '/tooltip', function() {
+        var $this = $(this);
+        $tooltip.show({
+          target: $link[0]
+        });
+        $this.process();
       });
-      $this.process();
-    });
+    }
+    $link.attr('href', targetUrl);
+    let logoutDelay = $container.data('signout-delay') || 1000;
+    signOutUser(logoutDelay);
   }
-
-  let logoutDelay = $container.data('signout-delay') || 1000;
-  signOutUser(logoutDelay);
 }
 
 getTooltip();
 //signOutUser();
 document.addEventListener("turbolinks:load", injectCode);
+document.addEventListener("turbolinks:load", getTooltip);
