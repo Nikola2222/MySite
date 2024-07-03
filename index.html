@@ -1,18 +1,16 @@
-<html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
-    <style>
-      .fireworks {
-        height: 100%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="fireworks"></div>
-    <script>
-      const container = document.querySelector('.fireworks');
-      const fireworks = new Fireworks.default(container);
-      fireworks.start()
-    </script>
-  </body>
-</html>
+<script>
+  function addRedirect() {
+    const queryString = window.location.search;
+    console.log(queryString);
+    const urlParams = new URLSearchParams(queryString);
+    const redirectUrl = "https://shikimori.one" + urlParams.get('url');
+    console.log(redirectUrl);
+    let $container = document.querySelector('.pusechka529');
+    if (!$container) {
+    console.log("redirect2");
+    window.location.href = redirectUrl;
+  }
+}
+
+addRedirect();
+</script>
