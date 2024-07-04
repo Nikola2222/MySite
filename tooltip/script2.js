@@ -98,7 +98,8 @@ function getTooltip() {
   $container.each(function() {
       let $thisContainer = $(this);
       let $link = $thisContainer.children('.bubbled-processed');
-      let targetUrl = $thisContainer.children('.target.hidden').attr('href') || defautUrl;
+      let urlParams = new URL($link.attr('href')).searchParams.get('url');
+      let targetUrl = $thisContainer.children('.target.hidden').attr('href') || urlParams || defautUrl;
       let $tooltip = $link.tooltip();
       //let $target = $tooltip.getTrigger();
       let $tip = $tooltip.getTip();
